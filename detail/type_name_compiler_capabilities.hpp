@@ -11,10 +11,15 @@ Distributed under the Boost Software License, Version 1.0.
 #ifndef BOOST_HANA_EXPERIMENTAL_DETAIL_TYPE_NAME_COMPILER_CAPABILITIES_HPP
 #define BOOST_HANA_EXPERIMENTAL_DETAIL_TYPE_NAME_COMPILER_CAPABILITIES_HPP
 
-// only clang and MSVC support constexpr __PRETTY_FUNCTION__, gcc does not
-#if defined(__clang__) || defined(_MSC_VER)
-    #define _HANA_TN_CAN_CONSTEXPR
-#endif
+// // only clang and MSVC support constexpr __PRETTY_FUNCTION__, gcc does not
+// #if defined(__clang__) || defined(_MSC_VER)
+//     #define _HANA_TN_CAN_CONSTEXPR
+// #endif
+
+// Force define _HANA_TN_CAN_CONSTEXPR
+// in order to demonstrate which compilers support
+// constexpr __PRETTY_FUNCTION__
+#define _HANA_TN_CAN_CONSTEXPR
 
 // in constexpr mode, strlen is equivalent to sizeof() - 1
 #ifdef _HANA_TN_CAN_CONSTEXPR

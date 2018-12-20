@@ -1,0 +1,85 @@
+language: cpp
+os: linux
+dist: xenial
+sudo: false
+
+matrix:
+  include:
+    # Clang 3.5
+    - env: COMPILER=clang++-3.5 _CXX=clang++
+      addons: { apt: { packages: ["clang-3.5"], sources: ["llvm-toolchain-precise-3.5"] } }
+
+    # Clang 3.6
+    - env: COMPILER=clang++-3.6 _CXX=clang++
+      addons: { apt: { packages: ["clang-3.6"], sources: ["llvm-toolchain-precise-3.6"] } }
+
+    # Clang 3.7
+    - env: COMPILER=clang++-3.7 _CXX=clang++
+      addons: { apt: { packages: ["clang-3.7"], sources: ["llvm-toolchain-precise-3.7"] } }
+
+    # Clang 3.8
+    - env: COMPILER=clang++-3.8 _CXX=clang++
+      addons: { apt: { packages: ["clang-3.8"], sources: ["llvm-toolchain-precise-3.8"] } }
+
+    # Clang 3.9
+    - env: COMPILER=clang++-3.9 _CXX=clang++
+      addons: { apt: { packages: ["clang-3.9"], sources: ["llvm-toolchain-trusty-3.9"] } }
+
+    # Clang 4.0
+    - env: COMPILER=clang++-4.0 _CXX=clang++
+      addons: { apt: { packages: ["clang-4.0"], sources: ["llvm-toolchain-trusty-4.0"] } }
+
+    # Clang 5.0
+    - env: COMPILER=clang++-5.0 _CXX=clang++
+      addons: &defaults { apt: { packages: ["clang-5.0"], sources: ["llvm-toolchain-xenial-5.0"] } }
+
+    # Clang 6.0
+    - env: COMPILER=clang++-6.0 _CXX=clang++
+      addons: &defaults { apt: { packages: ["clang-6.0"], sources: ["llvm-toolchain-xenial-6.0"] } }
+
+    # GCC 6
+    - env: COMPILER=g++-6 _CXX=g++
+      addons: { apt: { packages: ["g++-6"], sources: ["ubuntu-toolchain-r-test"] } }
+
+    # GCC 7
+    - env: COMPILER=g++-7 _CXX=g++
+      addons: { apt: { packages: ["g++-7"], sources: ["ubuntu-toolchain-r-test"] } }
+
+    # Xcode 6.4
+    - os: osx _
+      env: CXX=clang++
+      osx_image: xcode6.4
+
+    # Xcode 7.3
+    - os: osx
+      env: _CXX=clang++
+      osx_image: xcode7.3
+
+    # Xcode 8.3
+    - os: osx
+      env: _CXX=clang++
+      osx_image: xcode8.3
+
+    # Xcode 9.1
+    - os: osx
+      env: _CXX=clang++
+      osx_image: xcode9.1
+
+    # Windows
+    - os: windows
+      env: COMPILER=VisualStudio2017
+
+script:
+  - |
+    if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+      export CXX=${_CXX} # Bypass travis !
+    fi
+  - $CXX --version
+  - mkdir build && cd build && cmake ..
+  - cmake --build . && cmake --install .
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      C:/Users/travis/build/pthom/pretty_function_sandbox/build/Debug/type_name_stringliteral_test.exe
+    else
+      ./type_name_stringliteral_test
+    fi
