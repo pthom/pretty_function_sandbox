@@ -41,4 +41,4 @@ build:
 test_script:
   - ps: cd c:\projects\pretty_function_sandbox\build
   - cmake --build .
-  - C:\projects\pretty_function_sandbox\build\Debug\type_name_stringliteral_test.exe
+  # - C:\projects\pretty_function_sandbox\build\Debug\type_name_stringliteral_test.exe
