@@ -24,6 +24,11 @@
 template<typename... T>
 struct Foo {};
 
+// Note: those are some very simple initial tests.
+// at least, we should include the same tests as in the
+// initial hana test suite (see type_name_stringliteral_test.cpp)
+// (there are some compile time and run time tests. the runtime tests
+//  are based on a regex)
 int main() {
     {
         auto t = detail::xqms_type_name<int>();
