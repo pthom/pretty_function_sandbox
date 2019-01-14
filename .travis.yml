@@ -72,6 +72,12 @@ script:
   - $CXX --version
   - mkdir build && cd build && cmake ..
   - cmake --build . && cmake --install .
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+      C:/Users/travis/build/pthom/pretty_function_sandbox/build/Debug/xqms_test.exe
+    else
+      ./xqms_test
+    fi
   # - |
   #   if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   #     C:/Users/travis/build/pthom/pretty_function_sandbox/build/Debug/type_name_stringliteral_test.exe
