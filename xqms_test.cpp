@@ -15,6 +15,7 @@
 // Helper macros that will spit an intentional compiling error
 // in which you can read a type
 // Use them during development in order to display string sequences
+// in the compiler output by creating an intentional error.
 // Advice: pipe the compiler output to sed like this:
 //       make 2>&1| sed s/"', '"//g  -->
 #define COMPILER_OUTPUT_VAR_TYPE(var) { var.IntentionalError = 42; }
@@ -30,11 +31,18 @@ int main() {
     }
     {
         // Todo : find a way to better construct a string sequence
-        // (MAKE_STRING_SEQUENCE is awkward)
+        // (MAKE_STRING_SEQUENCE is difficult to read & write)
         auto t = detail::xqms_type_name< Foo<int> >();
         //COMPILER_OUTPUT_VAR_TYPE(t);
         ASSERT_TYPE_NAME(
             t,
             MAKE_STRING_SEQUENCE('F', 'o', 'o', '<', 'i', 'n', 't', '>') );
+    }
+    {
+        auto t = detail::xqms_type_name< Foo<int, char> >();
+        //COMPILER_OUTPUT_VAR_TYPE(t);
+        ASSERT_TYPE_NAME(
+            t,
+            MAKE_STRING_SEQUENCE('F', 'o', 'o', '<', 'i', 'n', 't', ',', ' ', 'c', 'h', 'a', 'r', '>') );
     }
 }
