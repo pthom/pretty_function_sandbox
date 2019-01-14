@@ -4,7 +4,7 @@
 #ifndef TYPE_NAME_H
 #define TYPE_NAME_H
 
-#include "detail/typename_stringliteral.hpp"
+//#include "detail/type_name_stringliteral.hpp"
 #include <cstdlib>
 #include <utility>
 
@@ -89,15 +89,21 @@ constexpr char get_name_idx()
     return p[off];
 }
 
-template <typename T, std::size_t ...i>
+// template <typename T, std::size_t ...i>
+// constexpr auto type_name_impl1(std::index_sequence<i...>)
+// {
+// 	return boost::hana::string<get_name_idx<T, i>()...>{};
+// }
+
+template <typename T, std::size_t... i>
 constexpr auto type_name_impl1(std::index_sequence<i...>)
 {
-	return boost::hana::string<get_name_idx<T, i>()...>{};
+    //return boost::hana::string<get_name_idx<T, i>()...>{};
+    return std::integer_sequence<char, get_name_idx<T, i>()...>{};
 }
 
-
 template <typename T>
-constexpr auto type_name()
+constexpr auto xqms_type_name()
 {
     return type_name_impl1<T>(std::make_index_sequence<get_name_length<T>()>{});
 }
