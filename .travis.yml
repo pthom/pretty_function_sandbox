@@ -45,11 +45,6 @@ matrix:
     - env: COMPILER=g++-7 _CXX=g++
       addons: { apt: { packages: ["g++-7"], sources: ["ubuntu-toolchain-r-test"] } }
 
-    # Xcode 6.4
-    - os: osx _
-      env: CXX=clang++
-      osx_image: xcode6.4
-
     # Xcode 7.3
     - os: osx
       env: _CXX=clang++
